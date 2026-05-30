@@ -1,0 +1,8 @@
+<div>
+    <h1>Books of The Bible</h1>
+    {% for book in books %}
+    <a href="{% url 'chapter-list' book.book %}">
+        <p>{{ book.book }}</p>
+    </a>
+    {% endfor %}
+</div>

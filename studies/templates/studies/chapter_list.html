@@ -1,0 +1,8 @@
+<div>
+    <h1>Chapters of {{ book }}</h1>
+    {% for chapter in chapters %}
+    <a href="{% url 'verses-section' book chapter.chapter %}">
+        <p>{{ chapter.chapter }}</p>
+    </a>
+    {% endfor %}
+</div>

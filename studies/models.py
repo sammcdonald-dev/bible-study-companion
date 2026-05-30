@@ -3,14 +3,14 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
-class Passage(models.Model):
+class Verse(models.Model):
     translation = models.CharField(max_length=20, default="ESV")
     book = models.CharField(max_length=50)
     chapter = models.PositiveIntegerField()
     verse_start = models.PositiveIntegerField()
-    verse_end = models.PositiveIntegerField()
+    # verse_end = models.PositiveIntegerField() passage will now be verse by verse
 
-    text = models.CharField(max_length=150)
+    text = models.TextField()
 
     def __str__(self):
         return f"{self.book} {self.chapter}:{self.verse_start}"
@@ -25,8 +25,8 @@ class Collection(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
 
-    passages = models.ManyToManyField(
-        Passage,
+    verses = models.ManyToManyField(
+        Verse,
         related_name='collections',
         blank=True
     )
@@ -37,13 +37,13 @@ class Collection(models.Model):
     def __str__(self):
         return f"{self.title}"
 
-    def passage_count(self):
-        return self.passages.count()
+    def verse_count(self):
+        return self.verses.count()
 
 class ProgressEntry(models.Model):
     class Meta:
         ordering = ['-read_at']
-        unique_together = ('user', 'passage')
+        unique_together = ('user', 'verse')
         # orders by last read
         # and user and passage
         # unique to each other
@@ -53,13 +53,15 @@ class ProgressEntry(models.Model):
         on_delete=models.CASCADE,
         related_name='progress_entries'
     )
-    passage = models.ForeignKey(
-        Passage,
+    verse = models.ForeignKey(
+        Verse,
         on_delete=models.CASCADE,
         related_name="progress_entries",
+        blank=True,
+        default='John 3:16'
     )
     read_at = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.user.username} read {self.passage}"
+        return f"{self.user.name} read {self.verse}"

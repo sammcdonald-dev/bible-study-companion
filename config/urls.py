@@ -17,6 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from studies.views import ChapterListView, VerseListView, BookListView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('verses/', view=VerseListView.as_view()),
+    path('read/', view=BookListView.as_view()),
+    path('read/<str:book>/',
+        view=ChapterListView.as_view(),
+        name='chapter-list'
+    ),
+    path('read/<str:book>/<int:chapter>/',
+        view=VerseListView.as_view(),
+        name='verses-section'
+    ),
 ]

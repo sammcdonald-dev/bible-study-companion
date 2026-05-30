@@ -1,0 +1,10 @@
+<div>
+    <h1>Passages</h1>
+    {{ book }}
+    {% for verse in verse_list %}
+        <p>{{ verse.text }}</p>
+    {% endfor %}
+    <a href="{% url 'verses-section' book chapter %}?start={{ next_start }}">
+        Next ->
+    </a>
+</div>
