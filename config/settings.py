@@ -59,7 +59,6 @@ DATABASES = {
         'NAME': Path('/data/db.sqlite3') if not DEBUG else BASE_DIR / 'db.sqlite3',
         'OPTIONS': {
             'timeout': 20,
-            'init_command': 'PRAGMA journal_mode=WAL;',
         },
     }
 }
