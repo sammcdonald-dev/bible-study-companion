@@ -5,3 +5,7 @@ db.sqlite3-wal
 db.sqlite3-shm
 env
 .env
+__pycache__/
+*.pyc
+*.pyo
+venv/
