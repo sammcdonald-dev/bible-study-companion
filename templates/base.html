@@ -21,7 +21,10 @@
                 <a href="/read/">Books</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'profile' %}">{{ user.username }}</a>
-                    <a href="{% url 'logout' %}" class="nav-auth-btn">Log Out</a>
+                    <form method="post" action="{% url 'logout' %}" style="display:contents">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-auth-btn">Log Out</button>
+                    </form>
                 {% else %}
                     <a href="{% url 'login' %}" class="nav-auth-btn">Log In</a>
                 {% endif %}

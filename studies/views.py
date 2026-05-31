@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import View, ListView, TemplateView
 from django.views.generic.edit import CreateView
+from django.shortcuts import redirect
 
 from studies.forms import UserSignUpForm
 from .models import Verse, ProgressEntry
@@ -60,23 +61,54 @@ class VerseListView(ListView):
     model = Verse
     template_name = 'studies/verse_list.html'
 
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.book = self.kwargs['book']
+        self.chapter = self.kwargs['chapter']
+        self.start = int(request.GET.get('start', 0))
+
+        self.verses_per_chapter = Verse.objects.filter(
+            book=self.book,
+            chapter=self.chapter
+        ).count()
+
+        self.chapters_per_book = Verse.objects.filter(
+            book=self.book
+        ).values('chapter').count()
+
+    def get(self, request, *args, **kwargs):
+        # save a progress entry on view
+        if self.start >= self.verses_per_chapter:
+            return redirect('verses-section', self.book, self.chapter + 1)
+
+        if request.user.is_authenticated:
+            for verse in self.get_queryset():
+                entry, created = ProgressEntry.objects.get_or_create(
+                    user=request.user,
+                    verse=verse
+                )
+        # Otherwuise list View handles it normally
+        return super().get(request, *args, **kwargs)
+
     def get_queryset(self):
-        book = self.kwargs['book']
-        chapter = self.kwargs['chapter']
-        start = int(self.request.GET.get('start', 0))
-
-        verses = Verse.objects.filter(book=book, chapter=chapter)[start:start+10]
-
+        verses = Verse.objects.filter(
+            book=self.book,
+            chapter=self.chapter
+        )[self.start:self.start+8]
         return verses
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['book'] = self.kwargs['book']
-        context['chapter'] = self.kwargs['chapter']
-        start = int(self.request.GET.get('start', 0))
+        context['book'] = self.book
+        context['chapter'] = self.chapter
+        context['start'] = self.start
+        context['next_start'] = self.start + 8
 
-        context['start'] = start
-        context['next_start'] = start + 8
+        context['verses_per_chapter'] = self.verses_per_chapter
+        context['chapters_per_book'] = self.chapters_per_book
+        context['has_more_verses'] = self.verses_per_chapter > self.start
+        context['next_chapter'] = self.chapter + 1
+
         return context
 
 class ProfileView(LoginRequiredMixin, TemplateView):

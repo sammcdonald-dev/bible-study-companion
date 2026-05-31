@@ -64,4 +64,4 @@ class ProgressEntry(models.Model):
     notes = models.TextField(blank=True)
 
     def __str__(self):
-        return f"{self.user.name} read {self.verse}"
+        return f"{self.user} read {self.verse}"

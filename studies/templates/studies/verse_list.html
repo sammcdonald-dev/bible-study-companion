@@ -27,6 +27,10 @@
     {% if start > 0 %}
     <a class="btn-pagination" href="{% url 'verses-section' book chapter %}?start={{ start|add:'-8' }}">&larr; Previous</a>
     {% endif %}
+    {% if has_more_verses %}
     <a class="btn-pagination" href="{% url 'verses-section' book chapter %}?start={{ next_start }}">Next &rarr;</a>
+    {% else %}
+    <a class="btn-pagination" href="{% url 'verses-section' book next_chapter %}?start=0">Next Chapter&rarr;</a>
+    {% endif %}
 </div>
 {% endblock %}
