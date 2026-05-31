@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Bible Study Companion{% endblock %}
+
+{% block content %}
+<div class="home-hero">
+    <p class="page-subtitle">Welcome</p>
+    <h1 class="page-title">Bible Study Companion</h1>
+</div>
+
+<div class="home-cards">
+
+    <a class="home-card" href="{% if user.is_authenticated and last_verse_read %}{% url 'verses-section' last_verse_read.verse.book last_verse_read.verse.chapter %}{% else %}/read/{% endif %}">
+        <div class="home-card__icon">&#9654;</div>
+        <div class="home-card__label">
+            {% if user.is_authenticated and last_verse_read %}
+                Pick Up Where You Left Off
+            {% else %}
+                Start Reading
+            {% endif %}
+        </div>
+        {% if user.is_authenticated and last_verse_read %}
+        <div class="home-card__sub">{{ last_verse_read.verse.book }} {{ last_verse_read.verse.chapter }}:{{ last_verse_read.verse.verse_start }}</div>
+        {% endif %}
+    </a>
+
+    <a class="home-card" href="/collections/">
+        <div class="home-card__icon">&#9783;</div>
+        <div class="home-card__label">
+            {% if user.is_authenticated %}
+                Your Collections
+            {% else %}
+                Collections
+            {% endif %}
+        </div>
+        <div class="home-card__sub">Saved passages &amp; notes</div>
+    </a>
+
+    <a class="home-card" href="/progress/">
+        <div class="home-card__icon">&#9675;</div>
+        <div class="home-card__label">Reading Progress</div>
+        <div class="home-card__sub">
+            {% if user.is_authenticated %}
+                {{ reading_progress|floatformat:1 }}% complete
+            {% else %}
+                0% — log in to track
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+        <div class="home-card__progress-bar">
+            <div class="home-card__progress-fill" style="width: {{ reading_progress|floatformat:1 }}%"></div>
+        </div>
+        {% endif %}
+    </a>
+
+</div>
+{% endblock %}

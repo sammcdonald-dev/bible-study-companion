@@ -25,7 +25,7 @@
 
 <div class="pagination">
     {% if start > 0 %}
-    <a class="btn-pagination" href="{% url 'verses-section' book chapter %}?start={{ start|add:'-10' }}">&larr; Previous</a>
+    <a class="btn-pagination" href="{% url 'verses-section' book chapter %}?start={{ start|add:'-8' }}">&larr; Previous</a>
     {% endif %}
     <a class="btn-pagination" href="{% url 'verses-section' book chapter %}?start={{ next_start }}">Next &rarr;</a>
 </div>

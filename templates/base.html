@@ -15,9 +15,16 @@
 
     <header class="site-header">
         <div class="container">
-            <a href="/read/" class="site-logo">Bible Study Companion</a>
+            <a href="/" class="site-logo">Bible Study Companion</a>
             <nav class="site-nav">
+                <a href="/">Home</a>
                 <a href="/read/">Books</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}">{{ user.username }}</a>
+                    <a href="{% url 'logout' %}" class="nav-auth-btn">Log Out</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="nav-auth-btn">Log In</a>
+                {% endif %}
             </nav>
         </div>
     </header>
