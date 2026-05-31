@@ -22,6 +22,7 @@ from studies.views import ChapterListView, VerseListView, BookListView
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('verses/', view=VerseListView.as_view()),
+    # paths for
     path('read/', view=BookListView.as_view()),
     path('read/<str:book>/',
         view=ChapterListView.as_view(),

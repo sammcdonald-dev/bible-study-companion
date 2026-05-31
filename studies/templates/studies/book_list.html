@@ -1,8 +1,17 @@
-<div>
-    <h1>Books of The Bible</h1>
+{% extends "base.html" %}
+
+{% block title %}Books of the Bible — Bible Study Companion{% endblock %}
+
+{% block content %}
+<p class="page-subtitle">Scripture</p>
+<h1 class="page-title">Books of the Bible</h1>
+<hr class="section-rule">
+
+<div class="book-grid">
     {% for book in books %}
-    <a href="{% url 'chapter-list' book.book %}">
-        <p>{{ book.book }}</p>
+    <a class="book-card" href="{% url 'chapter-list' book.book %}">
+        {{ book.book }}
     </a>
     {% endfor %}
 </div>
+{% endblock %}

@@ -1,8 +1,19 @@
-<div>
-    <h1>Chapters of {{ book }}</h1>
+{% extends "base.html" %}
+
+{% block title %}{{ book }} — Bible Study Companion{% endblock %}
+
+{% block content %}
+<a class="back-link" href="/read/">&larr; All Books</a>
+
+<p class="page-subtitle">Chapters</p>
+<h1 class="page-title">{{ book }}</h1>
+<hr class="section-rule">
+
+<div class="chapter-grid">
     {% for chapter in chapters %}
-    <a href="{% url 'verses-section' book chapter.chapter %}">
-        <p>{{ chapter.chapter }}</p>
+    <a class="chapter-card" href="{% url 'verses-section' book chapter.chapter %}">
+        {{ chapter.chapter }}
     </a>
     {% endfor %}
 </div>
+{% endblock %}

@@ -1,10 +1,32 @@
-<div>
-    <h1>Passages</h1>
-    {{ book }}
-    {% for verse in verse_list %}
-        <p>{{ verse.text }}</p>
-    {% endfor %}
-    <a href="{% url 'verses-section' book chapter %}?start={{ next_start }}">
-        Next ->
-    </a>
+{% extends "base.html" %}
+
+{% block title %}{{ book }} {{ chapter }} — Bible Study Companion{% endblock %}
+
+{% block content %}
+<div class="reading-header">
+    <p class="breadcrumb">
+        <a href="/read/">Books</a>
+        <span>&rsaquo;</span>
+        <a href="{% url 'chapter-list' book %}">{{ book }}</a>
+        <span>&rsaquo;</span>
+        Chapter {{ chapter }}
+    </p>
+    <h1 class="page-title">{{ book }} {{ chapter }}</h1>
 </div>
+
+<p class="verse-list">
+    {% for verse in verse_list %}
+    <span class="verse-item">
+        <sup class="verse-number">{{ verse.verse_start }}</sup>
+        <span class="verse-text">{{ verse.text }}</span>
+    </span>
+    {% endfor %}
+</p>
+
+<div class="pagination">
+    {% if start > 0 %}
+    <a class="btn-pagination" href="{% url 'verses-section' book chapter %}?start={{ start|add:'-10' }}">&larr; Previous</a>
+    {% endif %}
+    <a class="btn-pagination" href="{% url 'verses-section' book chapter %}?start={{ next_start }}">Next &rarr;</a>
+</div>
+{% endblock %}
