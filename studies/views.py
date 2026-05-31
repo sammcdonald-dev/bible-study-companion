@@ -74,7 +74,7 @@ class VerseListView(ListView):
         context['book'] = self.kwargs['book']
         context['chapter'] = self.kwargs['chapter']
         start = int(self.request.GET.get('start', 0))
-        chapter_end =
+
         context['start'] = start
         context['next_start'] = start + 8
         return context
