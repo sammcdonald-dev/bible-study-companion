@@ -20,7 +20,7 @@ from django.urls import path, include
 from studies.views import HomeView, ChapterListView, VerseListView, BookListView, SignUpView, ProfileView
 
 urlpatterns = [
-    path('health/', lambda r: HttpResponse('ok')),
+    path('health/', lambda r: HttpResponse(b'ok')),
     path('admin/', admin.site.urls),
     # Auth
     path('accounts/', include('django.contrib.auth.urls')),
