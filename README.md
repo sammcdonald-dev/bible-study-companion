@@ -6,11 +6,13 @@ This Web App is a Django FullStack App specifically for Reading The Bible in a y
 
 ## Tech Stack
 
-**Django 5.2** — Chosen as the backend framework for its batteries-included approach: the ORM, admin interface, and class-based views let us move quickly without wiring up a lot of boilerplate. For a data-heavy reading app this is a natural fit.
+**Django 5.2** — Chosen as the backend framework for its batteries-included approach: the ORM, admin interface, and class-based views let us move quickly without wiring up a lot of boilerplate.
 
-**SQLite** — Used as the development database. It requires zero configuration and keeps everything in a single file, which is ideal while the data model is still taking shape. Swapping to Postgres for production is a one-line settings change.
+**SQLite** — Used as the development database. It requires zero configuration and keeps everything in a single file, which is ideal while the data model is still taking shape. If this app ever scales to more usersss we could quickly change over to Postgres.
 
 **NIV Bible JSON (jsdelivr CDN)** — Verse data is pulled from a free, publicly hosted JSON dataset via a custom Django management command (`load_bible`). This keeps the repo small and lets us re-import or swap translations without storing large data files in version control.
+
+**Future - ESV Bible (ESV.org API)** — Verse data is pulled from a free, API from the ESV.org API maintained by the Crossway team. In the future we could 'fetch on demand' from this API and build in our own system to avoid rate limiting or over fetching.
 
 ---
 
