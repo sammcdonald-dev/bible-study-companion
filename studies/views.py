@@ -74,12 +74,24 @@ class VerseListView(ListView):
 
         self.chapters_per_book = Verse.objects.filter(
             book=self.book
-        ).values('chapter').count()
+        ).values('chapter').distinct().count()
+
+        self.book_order = Verse.objects.filter(
+            book=self.book
+        ).values_list('book_order', flat=True).first() or 0
 
     def get(self, request, *args, **kwargs):
         # save a progress entry on view
         if self.start >= self.verses_per_chapter:
-            return redirect('verses-section', self.book, self.chapter + 1)
+            if self.chapter >= self.chapters_per_book:
+                next_verse = Verse.objects.filter(
+                    book_order__gt=self.book_order
+                ).order_by('book_order').first()
+                if next_verse:
+                    return redirect('verses-section', next_verse.book, 1)
+                # last book — stay on final chapter
+            else:
+                return redirect('verses-section', self.book, self.chapter + 1)
 
         if request.user.is_authenticated:
             for verse in self.get_queryset():
@@ -107,6 +119,7 @@ class VerseListView(ListView):
         context['verses_per_chapter'] = self.verses_per_chapter
         context['chapters_per_book'] = self.chapters_per_book
         context['has_more_verses'] = self.verses_per_chapter > self.start
+        context['has_more_chapters'] = self.chapters_per_book > self.chapter
         context['next_chapter'] = self.chapter + 1
 
         return context

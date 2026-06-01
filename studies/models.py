@@ -11,6 +11,7 @@ class Verse(models.Model):
     # verse_end = models.PositiveIntegerField() passage will now be verse by verse
 
     text = models.TextField()
+    book_order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.book} {self.chapter}:{self.verse_start}"

@@ -29,7 +29,7 @@
     {% endif %}
     {% if has_more_verses %}
     <a class="btn-pagination" href="{% url 'verses-section' book chapter %}?start={{ next_start }}">Next &rarr;</a>
-    {% else %}
+    {% elif has_more_chapters %}
     <a class="btn-pagination" href="{% url 'verses-section' book next_chapter %}?start=0">Next Chapter&rarr;</a>
     {% endif %}
 </div>
