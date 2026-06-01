@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView
 from django.shortcuts import redirect
 
 from studies.forms import UserSignUpForm
-from .models import Verse, ProgressEntry
+from .models import UserProfile, Verse, ProgressEntry
 from django.urls import reverse_lazy
 
 # Create your views here.
@@ -112,7 +112,20 @@ class VerseListView(ListView):
         return context
 
 class ProfileView(LoginRequiredMixin, TemplateView):
+    model = UserProfile
     template_name = 'studies/profile.html'
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.user = request.user
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['progress'] = UserProfile.objects.filter(user=self.user).values('verses_read')
+
+    #     return context
+
+
 
 
 class SignUpView(CreateView):

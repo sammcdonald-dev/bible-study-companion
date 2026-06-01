@@ -40,6 +40,14 @@ class Collection(models.Model):
     def verse_count(self):
         return self.verses.count()
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    verses_read = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.user.username} profile"
+
+
 class ProgressEntry(models.Model):
     class Meta:
         ordering = ['-read_at']

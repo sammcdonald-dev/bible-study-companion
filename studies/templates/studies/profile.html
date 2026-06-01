@@ -5,4 +5,17 @@
 {% block content %}
 <p class="page-subtitle">Account</p>
 <h1 class="page-title">Hello, {{ request.user.username }}</h1>
+<div class="home-card__sub">
+    <p>Your Bible Reading Progress:</p>
+    {% if user.is_authenticated %}
+        {{ reading_progress|floatformat:1 }}% complete
+    {% else %}
+        0% — log in to track
+    {% endif %}
+</div>
+{% if user.is_authenticated %}
+<div class="home-card__progress-bar">
+    <div class="home-card__progress-fill" style="width: {{ reading_progress|floatformat:1 }}%"></div>
+</div>
+{% endif %}
 {% endblock %}
