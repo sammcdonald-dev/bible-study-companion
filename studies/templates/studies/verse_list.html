@@ -31,6 +31,8 @@
     <a class="btn-pagination" href="{% url 'verses-section' book chapter %}?start={{ next_start }}">Next &rarr;</a>
     {% elif has_more_chapters %}
     <a class="btn-pagination" href="{% url 'verses-section' book next_chapter %}?start=0">Next Chapter&rarr;</a>
+    {% elif next_book %}
+    <a class="btn-pagination" href="{% url 'verses-section' next_book 1 %}?start=0">{{ next_book }} &rarr;</a>
     {% endif %}
 </div>
 {% endblock %}

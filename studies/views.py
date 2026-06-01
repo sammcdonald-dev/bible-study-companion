@@ -122,6 +122,16 @@ class VerseListView(ListView):
         context['has_more_chapters'] = self.chapters_per_book > self.chapter
         context['next_chapter'] = self.chapter + 1
 
+        is_last_chapter = self.chapter >= self.chapters_per_book
+        is_last_page = not context['has_more_verses']
+        if is_last_chapter and is_last_page:
+            next_verse = Verse.objects.filter(
+                book_order__gt=self.book_order
+            ).order_by('book_order').first()
+            context['next_book'] = next_verse.book if next_verse else None
+        else:
+            context['next_book'] = None
+
         return context
 
 class ProfileView(LoginRequiredMixin, TemplateView):
