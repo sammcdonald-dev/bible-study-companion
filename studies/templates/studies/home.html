@@ -24,7 +24,7 @@
         {% endif %}
     </a>
 
-    <a class="home-card" href="/collections/">
+    <!--<a class="home-card" href="/collections/">
         <div class="home-card__icon">&#9783;</div>
         <div class="home-card__label">
             {% if user.is_authenticated %}
@@ -34,7 +34,7 @@
             {% endif %}
         </div>
         <div class="home-card__sub">Saved passages &amp; notes</div>
-    </a>
+    </a>-->
 
     <a class="home-card" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}/accounts/login/{% endif %}">
         <div class="home-card__icon">&#9675;</div>
