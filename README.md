@@ -69,6 +69,10 @@ Admin panel: `http://127.0.0.1:8000/admin/`
 
 | URL | Description |
 |-----|-------------|
+| `/` | Home Page has Start Reading and Progress (future collections) |
+| `/signup/` | Sign up and register route |
+| `/accounts/login` | User facing login route |
+| `/accounts/profile` | User Profile page |
 | `/read/` | Browse all books |
 | `/read/<book>/` | List chapters in a book |
 | `/read/<book>/<chapter>/` | Read verses (10 per page, `?start=N` to paginate) |
