@@ -36,9 +36,7 @@
         <div class="home-card__sub">Saved passages &amp; notes</div>
     </a>
 
-    <a class="home-card" href="{% if user.is_authenticated %}
-        {% url 'verses-section' last_verse_read.verse.book last_verse_read.verse.chapter %}
-        {% else %}/accounts/login/{% endif %}">
+    <a class="home-card" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}/accounts/login/{% endif %}">
         <div class="home-card__icon">&#9675;</div>
         <div class="home-card__label">Reading Progress</div>
         <div class="home-card__sub">
